@@ -1,0 +1,35 @@
+body {
+    text-align: center;
+}
+
+canvas {
+    border: 2px solid black;
+    background: black;
+}
+
+#heading {
+    font-family: Courier New, Courier, monospace
+}
+
+#game-controls{
+    margin-top: 10px;
+}
+
+.centered {
+    float:none;
+    vertical-align:top;
+    margin-right:-4px;
+}
+
+.control-button {
+    width : 75px;
+    height: 35px;
+    background-color: #59a659;
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.btn-text {
+    padding-top: 10px;
+}
