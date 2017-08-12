@@ -1,4 +1,4 @@
-function Piece(x, y, color, border, bkcolor){
+function Piece(x, y, color, border, bkcolor,logged){
     this.x = x;
     this.y = y;
     this.color = color;
@@ -7,7 +7,8 @@ function Piece(x, y, color, border, bkcolor){
     this.pattern = random_pattern();
     this.height = this.pattern.length;
     this.width = this.pattern[0].length;
-    console.log(` width: ${this.width} large: ${this.height}`);
+    this.logged = logged;
+    log(` width: ${this.width} large: ${this.height}`, this.logged);
 
     this.draw = function (ctx){
         this.generic_draw(ctx,false);
@@ -20,7 +21,7 @@ function Piece(x, y, color, border, bkcolor){
     this.generic_draw = function (ctx, del){
         var index = 0;
         this.blocks.forEach(function(block) {
-            console.log(`block: ${index} x: ${block.x} y: ${block.y} `);
+            log(`block: ${index} x: ${block.x} y: ${block.y} `, this.logged);
             index++;
             if(del)block.delete(ctx);
             else block.draw(ctx);
@@ -52,7 +53,7 @@ function Piece(x, y, color, border, bkcolor){
 
 
     this.build = function (){
-        console.log(`x: ${this.x}  y: ${this.y} `);
+        log(`x: ${this.x}  y: ${this.y} `);
         var blocks = [];
         var horizontal = my_random(2) == 0;
         var flipped = my_random(2) == 0;
@@ -63,7 +64,7 @@ function Piece(x, y, color, border, bkcolor){
             for (var i = 0; i < this.width; i++){
                 var x_coord = this.x + (i - center_x) * unit;
                 var y_coord = this.y + (j - center_y) * unit;
-                console.log(`index: ${index} x: ${(i - center_x) * unit} y: ${(i - center_y) * unit} i: ${i} j: ${j} block? : ${this.pattern[j][i]} `);
+                log(`index: ${index} x: ${(i - center_x) * unit} y: ${(i - center_y) * unit} i: ${i} j: ${j} block? : ${this.pattern[j][i]} `, this.logged);
                 if (this.pattern[j][i]){
                     blocks.push(new Block(x_coord, y_coord, this.color, this.border,this.bkcolor));
                 }
@@ -78,17 +79,17 @@ function Piece(x, y, color, border, bkcolor){
     this.rotateCW = function(ctx){
         this.delete(ctx);
         this.pattern = rotate_matrix90CW(this.pattern);
-        console.log(`width ${this.width}  height${this.height}`);
+        log(`width ${this.width}  height${this.height}`, this.logged);
         var temp = this.height;
         this.height = this.width;
         this.width = temp;
-        console.log(`width ${this.width}  height${this.height}`);
+        log(`width ${this.width}  height${this.height}`, this.logged);
         this.blocks = this.build();
         this.draw(ctx);
     }
 
     this.touchdown = function(){
-        if (canvas_height - this.height*unit/2 <= this.y) console.log(` the lowest point ${this.y + this.height*unit/2}`);
+        if (canvas_height - this.height*unit/2 <= this.y) log(` the lowest point ${this.y + this.height*unit/2}`, this.logged);
         return canvas_height - this.height*unit/2 <= this.y ;
     }
 

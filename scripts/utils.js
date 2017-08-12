@@ -7,7 +7,6 @@ function random_color(){
 }
 
 function random_pattern(){
-    console.log(patterns.length);
     return patterns[my_random(patterns.length)];
 }
 
@@ -33,15 +32,14 @@ function rotate_matrix90CW(arr){
             row.push(arr[j][i]);
             string += arr[j][i];
         }
-        console.log(string);
+        //console.log(string);
         arr_result.push(row);
     }
-    console.log(arr);
-    console.log(arr_result);
+    //console.log(arr);
+    //console.log(arr_result);
     return arr_result;
 }
 
-function log_debug(str){
-    
-    console.log(str);
+function log(str,logged){
+    if (logged) console.log(str);
 }

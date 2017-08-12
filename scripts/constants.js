@@ -33,3 +33,8 @@ var A = 65;
 var W = 87;
 var D = 68;
 var S = 83;
+
+// misc
+var level = 2048;
+var dimmensions = "2d";
+var pause_btn_id = "#pause";

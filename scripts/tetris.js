@@ -1,21 +1,19 @@
-
 $(document).ready( function (){
     var cycle;
     var isPaused = false;
     var tiles = get2DArray();         
+    var logged = true;
     var canvas = document.getElementById(canvas_id);
-    var ctx = canvas.getContext("2d");
-    var piece = new Piece(randomX(), unit, random_color(),bkColor,bkColor);
-    
+    var ctx = canvas.getContext(dimmensions);
+    var piece = new Piece(randomX(), unit, random_color(), bkColor, bkColor, logged);
 
     function run(){
         piece.draw(ctx);
     }
 
     function play() {
-        console.log("playing");
         if(piece.touchdown()) 
-            piece = new Piece(randomX(), 2*unit, random_color(),bkColor,bkColor);
+            piece = new Piece(randomX(), 2*unit, random_color(),bkColor,bkColor,logged);
         piece.move_down(ctx);
     }
 
@@ -37,7 +35,7 @@ $(document).ready( function (){
     
 
 
-    $("#pause").click(function(){
+    $(pause_btn_id).click(function(){
         if(isPaused) {
             cycle = setInterval(play, 100);
             isPaused = false;
