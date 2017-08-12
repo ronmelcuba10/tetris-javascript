@@ -30,6 +30,19 @@ canvas {
     border-radius: 4px;
 }
 
+#pause-wrapper {
+    margin: 0 auto; 
+    width: 400px;
+}
+
+#pause {
+    margin-top: 5px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: #D964C2;
+}
+
 .btn-text {
     padding-top: 10px;
 }

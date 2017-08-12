@@ -1,16 +1,17 @@
 
-function Block(x,y,color,border){
+function Block(x,y,color,border, bkcolor){
     this.x = x;
     this.y = y;
     this.color = color;
     this.border = border;
+    this.bkcolor = bkcolor;
 
     this.move = function(dx,dy){
         this.x = this.x + dx;
         this.y = this.y + dy;
     }
 
-    this.draw = function(ctx){
+    this.draw_color = function(ctx, color, border){
         var x0 = this.x;
         var x1 = this.x + 3*factor;
         var x2 = this.x + 7*factor;
@@ -20,8 +21,8 @@ function Block(x,y,color,border){
         var y2 = this.y + 7*factor;
         var y3 = this.y + unit;
         ctx.lineWidth = border_size;
-        ctx.strokeStyle = color;
-        ctx.fillStyle = border;
+        ctx.strokeStyle = border;
+        ctx.fillStyle = color;
 
         ctx.beginPath();
         ctx.moveTo(x1,y0);
@@ -37,5 +38,15 @@ function Block(x,y,color,border){
         ctx.stroke();
         ctx.fill();
     }
+
+    this.delete = function (ctx) {
+        this.draw_color(ctx, this.bkcolor, this.bkcolor);
+    }
+
+    this.draw = function (ctx){
+        this.draw_color(ctx, this.color, this.border);
+    }
+
+
 }
 

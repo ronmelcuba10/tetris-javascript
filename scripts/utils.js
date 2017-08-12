@@ -12,18 +12,25 @@ function random_pattern(){
 }
 
 function rotate_matrix90CW(arr){
-    
     var height = arr.length;
     var width = arr[0].length;
     var arr_result = [];
     for(var i = 0; i < width; i++ ){
+        var string = "";
         var row = [];
         for( var j = height - 1 ; j >= 0; j--){
             row.push(arr[j][i]);
+            string += arr[j][i];
         }
+        console.log(string);
         arr_result.push(row);
     }
     console.log(arr);
     console.log(arr_result);
     return arr_result;
+}
+
+function log_debug(str){
+    
+    console.log(str);
 }
