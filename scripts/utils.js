@@ -11,6 +11,17 @@ function random_pattern(){
     return patterns[my_random(patterns.length)];
 }
 
+function randomX(){
+    var n = my_random(blocks_wide);
+    if(n<4) n = 4;
+    if(n>16) n = 16;
+    return n * unit;
+}
+
+function get2DArray( w, h, value) {
+    return Array(w).fill(value).map(x => Array(h).fill(value));
+}
+
 function rotate_matrix90CW(arr){
     var height = arr.length;
     var width = arr[0].length;

@@ -47,6 +47,7 @@ function Piece(x, y, color, border, bkcolor){
         this.blocks.forEach(function(block) {
             block.move(dx, dy);
         });
+        this.draw(ctx);
     }
 
 
@@ -83,15 +84,12 @@ function Piece(x, y, color, border, bkcolor){
         this.width = temp;
         console.log(`width ${this.width}  height${this.height}`);
         this.blocks = this.build();
+        this.draw(ctx);
     }
 
     this.touchdown = function(){
         if (canvas_height - this.height*unit/2 <= this.y) console.log(` the lowest point ${this.y + this.height*unit/2}`);
         return canvas_height - this.height*unit/2 <= this.y ;
     }
-
-    
-
-    
 
 }

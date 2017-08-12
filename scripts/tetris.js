@@ -1,48 +1,50 @@
 
 $(document).ready( function (){
-    var canvas_id = "game-canvas";
-    var paused = false;
-        
-
-    var pieces = [];        // moving 
-    var tiles = [];         // on the floor
+    var cycle;
+    var isPaused = false;
+    var tiles = get2DArray();         
     var canvas = document.getElementById(canvas_id);
     var ctx = canvas.getContext("2d");
-
+    var piece = new Piece(randomX(), unit, random_color(),bkColor,bkColor);
     
 
-    
-    function randomX(){
-        var n = my_random(canvas_width/unit);
-        if(n<4) n = 4;
-        if(n>16) n = 16;
-        return n * unit;
+    function run(){
+        piece.draw(ctx);
     }
-
-
-    //b.draw(ctx);
-    //b.move_down(ctx);
-    var b = new Piece(randomX(), unit, random_color(),bkColor,bkColor);
-    b.draw(ctx);
 
     function play() {
-        if(b.touchdown()) b = new Piece(randomX(), 2*unit, random_color(),bkColor,bkColor);
-        b.rotateCW(ctx);
-        b.move_down(ctx);
-        b.draw(ctx);
+        console.log("playing");
+        if(piece.touchdown()) 
+            piece = new Piece(randomX(), 2*unit, random_color(),bkColor,bkColor);
+        piece.move_down(ctx);
     }
 
-    var cycle = setInterval(play, 100);
+    function move(key){
+        switch (key) {
+            case LEFT:  piece.move_left(ctx);
+                        break;
+            case UP:    piece.rotateCW(ctx);
+                        break;
+            case RIGHT: piece.move_right(ctx);
+                        break;
+            default: piece.move_down(ctx); // down
+        }
+    }
+
+        
+    run();
+    cycle = setInterval(play, 1000);
+    
 
 
     $("#pause").click(function(){
-        if(paused) {
+        if(isPaused) {
             cycle = setInterval(play, 100);
-            paused = false
+            isPaused = false;
         }
         else {
             clearInterval(cycle);
-            paused = true;
+            isPaused = true;
         }
     });
 
@@ -54,80 +56,11 @@ $(document).ready( function (){
         if(key == W ) key = UP;
         if(key == D ) key = RIGHT;
         if (key > 36 && key < 41){
-            the_board.move(select_vector(key));
+            move(key);
             event.preventDefault();
         }
     });
 
-
-
-    
-    /*
-    b.rotateCW(ctx);
-    b.move_down(ctx);
-    b.draw(ctx);
-    */
-
-    /*
-    b.rotateCW(ctx);
-    b.move_down(ctx);
-    b.draw(ctx);
-    */
-
-
-    /*
-    b.draw(ctx);
-    
-    b.move_down(ctx);
-    b.move_down(ctx);
-    b.draw(ctx)
-
-    b.move_right(ctx)
-    b.draw(ctx)
-    b.move_right(ctx)
-    b.draw(ctx)
-    b.move_right(ctx)
-    b.draw(ctx)
-    
-    b.move_down(ctx);
-    b.draw(ctx)
-    b.move_down(ctx);
-    b.draw(ctx)
-    b.move_down(ctx);
-    b.draw(ctx)
-    
-    b.move_left(ctx);
-    b.draw(ctx)
-
-    b.move_down(ctx);
-    b.move_down(ctx);
-    b.rotateCW(ctx);
-    b.draw(ctx);
-    */
-
-    
-
-
-
-    
-
-    //b.rotate_piece();
-    
-    /*
-    console.log("ya rote ");
-
-    
-    console.log("ya move ");
-
-    b.draw(ctx);
-
-    console.log("ya pinte ");
-    */
-
-    /*
-    var c = new Piece(200, 400, random_color(),"black");
-    c.draw_piece(ctx);
-    */
 
 
 });

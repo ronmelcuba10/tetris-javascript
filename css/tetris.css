@@ -8,7 +8,7 @@ canvas {
 }
 
 #heading {
-    font-family: Courier New, Courier, monospace
+    font-family: Courier New, Courier, monospace;
 }
 
 #game-controls{
@@ -41,6 +41,10 @@ canvas {
     border: 1px solid black;
     border-radius: 4px;
     background-color: #D964C2;
+    font-family: Courier New, Courier, monospace;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 100%;
 }
 
 .btn-text {
