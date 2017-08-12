@@ -57,8 +57,8 @@ function Piece(x, y, color, border, bkcolor,logged){
         var blocks = [];
         var horizontal = my_random(2) == 0;
         var flipped = my_random(2) == 0;
-        var center_x = 2;
-        var center_y = 1;
+        var center_x = Math.ceil(this.width/2);
+        var center_y = Math.floor(this.height/2);
         var index = 0;
         for (var j = 0; j < this.height; j++){
             for (var i = 0; i < this.width; i++){
@@ -88,8 +88,21 @@ function Piece(x, y, color, border, bkcolor,logged){
         this.draw(ctx);
     }
 
-    this.touchdown = function(){
-        if (canvas_height - this.height*unit/2 <= this.y) log(` the lowest point ${this.y + this.height*unit/2}`, this.logged);
+    this.lowest_point = function(){
+        return this.y + unit * Math.ceil(this.height/2);
+    }
+
+    this.farthest_right = function(){
+        return this.x + unit * this.width/2;
+    }
+
+    this.farthest_left = function(){
+        return this.x - unit * Math.ceil(this.width/2);
+    }
+
+    this.touchside = function() {
+        if (canvas_ - this.height*unit/2 <= this.y) 
+            log(` the lowest point ${this.y + this.height*unit/2}`, this.logged);
         return canvas_height - this.height*unit/2 <= this.y ;
     }
 
