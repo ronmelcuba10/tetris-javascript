@@ -8,6 +8,9 @@ var factor = unit/10;
 var border_size = 2;
 var block_width = 4;
 var block_height = 2;
+var step = 1;
+var no_step = 0;
+var middle = blocks_wide/2;
 
 // colors
 var bkColor = "black";
@@ -33,8 +36,10 @@ var A = 65;
 var W = 87;
 var D = 68;
 var S = 83;
+var Space = 32;
 
 // misc
-var level = 2048;
+var interval = 2048/2/2;
 var dimmensions = "2d";
 var pause_btn_id = "#pause";
+var initial_value = 0;

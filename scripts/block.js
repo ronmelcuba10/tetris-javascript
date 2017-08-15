@@ -1,16 +1,18 @@
 
 function Block(x,y,color,border, bkcolor){
-    this.x = x;
-    this.y = y;
+    this.x = x * unit;
+    this.y = y * unit;
     this.color = color;
     this.border = border;
     this.bkcolor = bkcolor;
 
+    // slide the block by dx,dy vector
     this.move = function(dx,dy){
-        this.x = this.x + dx;
-        this.y = this.y + dy;
+        this.x = this.x + dx * unit;
+        this.y = this.y + dy * unit;
     }
 
+    // draw this block with the specified parementers
     this.draw_color = function(ctx, color, border){
         var x0 = this.x;
         var x1 = this.x + 3*factor;
@@ -39,14 +41,24 @@ function Block(x,y,color,border, bkcolor){
         ctx.fill();
     }
 
+    // draws the block in background color -> removes it
     this.delete = function (ctx) {
         this.draw_color(ctx, this.bkcolor, this.bkcolor);
     }
 
+    // draws this block with its color
     this.draw = function (ctx){
         this.draw_color(ctx, this.color, this.border);
     }
 
+    // returns the game tile in where the block is situated
+    this.tile = function (){
+        return new Coor_Block(this.x/unit, this.y/unit, this);
+    }
 
+    this.teleport = function(x,y){
+        this.x = x * unit;
+        this.y = y * unit;
+    }
 }
 

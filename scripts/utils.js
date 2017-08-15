@@ -43,3 +43,23 @@ function rotate_matrix90CW(arr){
 function log(str,logged){
     if (logged) console.log(str);
 }
+
+function Coor_Block(x,y,blck){
+    this.x = x;
+    this.y = y;
+    this.blck = blck;
+    
+    this.Equal = function(x,y){
+        return this.x === x && this.y === y;
+    }
+}
+
+function Point(x,y){
+    this.x = x;
+    this.y = y;
+
+    this.Equal = function(x,y){
+        return this.x === x && this.y === y;
+    }
+}
+
