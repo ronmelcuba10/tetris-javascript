@@ -47,14 +47,8 @@ function play() {
 // returns true if there is no collision in the tiles passed as parameters
 function collision(contested_tiles){
     for( var i = 0; i < contested_tiles.length; i++){
-        //console.log(` contested tiles coordinates x${contested_tiles[i].x}  y${contested_tiles[i].y}`); 
-        //var is_empty = false;
-        //var is_whith_in = tiles.tile_is_whith_in_limits(contested_tiles[i].x, contested_tiles[i].y);
-        //if (is_whith_in) var is_empty = tiles.is_Empty_At(contested_tiles[i].x, contested_tiles[i].y);
-        //console.log(` is in ${is_whith_in}  is empty${is_empty}`); 
         if (!tiles.tile_is_whith_in_limits(contested_tiles[i].x, contested_tiles[i].y) 
             || !(tiles.is_Empty_At(contested_tiles[i].x, contested_tiles[i].y))){
-                //console.log("collision");                                        
                 return true;
             }
     }
