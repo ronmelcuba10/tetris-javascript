@@ -53,7 +53,7 @@ function Block(x,y,color,border, bkcolor){
 
     // returns the game tile in where the block is situated
     this.tile = function (){
-        return new Coor_Block(this.x/unit, this.y/unit, this);
+        return new Coor_Block(this.y/unit, this.x/unit, this);
     }
 
     this.teleport = function(x,y){

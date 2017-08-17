@@ -4,7 +4,7 @@ function Piece(x, y, color, border, bkcolor,logged){
     this.color = color;
     this.border = border;
     this.bkcolor = bkcolor;
-    this.pattern = line; //random_pattern();
+    this.pattern = random_pattern();
     this.height = this.pattern.length;
     this.width = this.pattern[0].length;
     this.logged = logged;
@@ -29,7 +29,7 @@ function Piece(x, y, color, border, bkcolor,logged){
     this.generic_draw = function (ctx, del){
         var index = 0;
         this.blocks.forEach(function(block) {
-            log(`block: ${index} x: ${block.x} y: ${block.y} `, this.logged);
+            //log(`block: ${index} x: ${block.x} y: ${block.y} `, this.logged);
             index++;
             if(del)block.delete(ctx);
             else block.draw(ctx);
@@ -85,7 +85,7 @@ function Piece(x, y, color, border, bkcolor,logged){
         for (var j = 0; j < this.height; j++){
             for (var i = 0; i < this.width; i++){
                 var point = this.get_block_coord(i, j);
-                log(`index: ${index} x: ${this.x - point.x} y: ${this.y - point.y} i: ${i} j: ${j} block? : ${this.pattern[j][i]} `, this.logged);
+                //log(`index: ${index} x: ${this.x - point.x} y: ${this.y - point.y} i: ${i} j: ${j} block? : ${this.pattern[j][i]} `, this.logged);
                 if (this.pattern[j][i])
                     blocks.push(new Block(point.x, point.y, this.color, this.border,this.bkcolor));
                 index++;
@@ -134,11 +134,11 @@ function Piece(x, y, color, border, bkcolor,logged){
             }
             var tile_x_coord = (this.x + (last - this.center_x )) + 1;
             var tile_y_coord = (this.y + (j - this.center_y));
-            log(`these are the right face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
+            //log(`these are the right face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
             face.push(new Point(tile_x_coord, tile_y_coord)); // I will use just the coordinates 
         }
         return face;
-        console.log("out of right");
+        //console.log("out of right");
     }
 
     // returns the contested tiles for the left movement
@@ -155,10 +155,10 @@ function Piece(x, y, color, border, bkcolor,logged){
             }
             var tile_x_coord = (this.x - (this.center_x - first)) - 1;
             var tile_y_coord = (this.y + (j - this.center_y));
-            log(`these are the left face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
+            //log(`these are the left face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
             face.push(new Point(tile_x_coord, tile_y_coord));
         }
-        console.log("out of left");
+        //console.log("out of left");
         return face;
     }
 
@@ -166,7 +166,7 @@ function Piece(x, y, color, border, bkcolor,logged){
     this.lower_face = function() {
         var face = [];
         this.set_pattern_center(this.width, this.height);
-        log("here in lower face",this.logged);
+        //log("here in lower face",this.logged);
         for (var i = 0; i < this.width; i++){
             var first = 0;
             for (var j = this.height-1; j >=0; j--){
@@ -177,10 +177,10 @@ function Piece(x, y, color, border, bkcolor,logged){
             }
             var tile_x_coord = (this.x - (this.center_x - first));
             var tile_y_coord = (this.y + (j - this.center_y)) + 1;
-            log(`these are the lower face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
+            //log(`these are the lower face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
             face.push(new Point(tile_x_coord, tile_y_coord));
         }
-        console.log("out of lower");
+        //console.log("out of lower");
         return face; 
     }
 
@@ -205,10 +205,9 @@ function Piece(x, y, color, border, bkcolor,logged){
         return face;
     }
 
-    /*
+    // tags the piece as not more move allowed
     this.touch_down = function() {
         this.touched_down = true;
     }
-    */
 
 }

@@ -4,10 +4,11 @@ function Tiles(){
     
     
     this.update = function() {
-        for (var i = 0; i < blocks_tall; i++){
+        for (var i = blocks_tall - 1; i >= 0; i--){
             if(this.row_is_complete(i)){
                 this.remove_row(i);
-                this.repaint(ctx);
+                this.repaint(ctx,i);
+                i++;
             } 
         }
     }
@@ -31,7 +32,7 @@ function Tiles(){
 
     this.row_is_complete = function(i){
         var complete = this.tiles[i].every( x => x != initial_value)
-        if (complete) console.log("complete***********************************************************************");
+        if (complete) console.log(`row ${i} is  complete***********************************************************************`);
         return complete;
     }
 
@@ -43,40 +44,47 @@ function Tiles(){
             block.delete(ctx);
         })
 
-        this.tiles.splice(i);
-        this.tiles.splice(0, 0, Array(blocks_wide).fill(initial_value));
+        this.tiles.splice(i,1);
+        this.tiles.unshift(Array(blocks_wide).fill(initial_value));
     }
 
-    /**
-     * TO DO .........................until the lines deleted NOT further
-     */
-    this.repaint = function(ctx){
+    // 
+    this.repaint = function(ctx,index){
         console.log("repainting");
-        for( var x = 0; x < blocks_tall; x++){
-            for ( var y = 0; y < blocks_wide; y++){
-                if(tiles[y][x]){
-                    tiles[y][x].delete(ctx);
-                    tiles[y][x].teleport(x,y);
-                    tiles[y][x].draw(ctx)
+        for( var y = index; y >= 0; y--){
+            for ( var x = 0; x < blocks_wide; x++){
+                if(this.tiles[y][x]){
+                    console.log(` deleting on y=${y} x=${x}`);
+                    this.tiles[y][x].delete(ctx);
+                    console.log(` moving down `);
+                    this.tiles[y][x].move(no_step,step);
+                    console.log(` drawing  `);
+                    this.tiles[y][x].draw(ctx)
                 }
             }
         }
-
-
-
-        this.tiles.forEach(function(col){
-            col.forEach(function(block){
-                if(block != initial_value) {
-                    console.log(`block X:${block.x} Y:${block.y} `);
-                    block.delete(ctx);
-                    block.move(0,unit);
-                    block.draw(ctx);
-                } 
-            })
-        });
     }
 
     this.is_Empty_At = function(x,y){
-        return this.tiles[y][x] == initial_value;
+        //console.log(`in Empty  value  in cell ${y},${x} is ${this.tiles[y][x]}`); 
+        return ( y < 0 || this.tiles[y][x] == initial_value);
+    }
+
+    // for debugging
+    this.print = function (){
+        try{
+            for( var y = 0; y < blocks_tall; y++){
+                var str = "";
+                for ( var x = 0; x < blocks_wide; x++){
+                    if(this.tiles[y][x]) str += 1;
+                    else str +=0;
+                }
+                console.log(str);
+                str = "";
+            }
+        }
+        catch(err){
+            console.log(err.message);
+        }
     }
 }
