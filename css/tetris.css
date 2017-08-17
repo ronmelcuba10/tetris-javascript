@@ -48,5 +48,10 @@ canvas {
 }
 
 .btn-text {
+    -webkit-user-select: none; 
+    -moz-user-select: none;
+    -ms-user-select: none; 
+    -o-user-select: none;
+    user-select: none;
     padding-top: 10px;
 }
