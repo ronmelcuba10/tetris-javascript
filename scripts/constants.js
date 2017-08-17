@@ -25,6 +25,7 @@ var r_corner = [[0,0,1],[1,1,1]];
 var base = [[0,1,0],[1,1,1]];
 var r_slide = [[0,1,1],[1,1,0]];
 var l_slide = [[1,1,0],[0,1,1]];
+var weird = [[1,0,0,1],[1,1,1,1]];
 var patterns = [line, square, l_corner, r_corner, base, r_slide, l_slide];
 
 // keys
@@ -41,5 +42,10 @@ var Space = 32;
 // misc
 var interval = 2048/2/2;
 var dimmensions = "2d";
-var pause_btn_id = "#pause";
 var initial_value = 0;
+var pause_btn_id = "#pause";
+var rotation_ccw_btn_id = "#rccw";
+var left_btn_id = "#left";
+var right_btn_id = "#right";
+var down_btn_id = "#down";
+var rotation_cw_btn_id = "#rcw"
