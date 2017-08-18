@@ -4,7 +4,9 @@ var logged = true;
 var canvas = document.getElementById(canvas_id);
 var ctx = canvas.getContext(dimmensions);
 var piece;
+var next_piece;
 var tiles;
+var side_bar;
 
 
 /**
@@ -13,7 +15,9 @@ var tiles;
 
 // starts the game
 function run(){
-    tiles = new Tiles()
+    tiles = new Tiles();
+    side_bar = new Sidebar();
+    next_piece = new Piece( middle, no_step, random_color(), bkColor, bkColor, logged); 
     piece = new_piece();
     piece.draw(ctx);
 }
@@ -28,7 +32,10 @@ function tilerize() {
 // before creating a new piece get all its blocks
 function new_piece() {
     tilerize();
-    return new Piece( middle, no_step, random_color(), bkColor, bkColor, logged);
+    var temp = next_piece;
+    next_piece = new Piece( middle, no_step, random_color(), bkColor, bkColor, logged); 
+    side_bar.show_next(next_piece);
+    return temp;
 }
 
 // runs the game - this is the core

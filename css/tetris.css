@@ -2,32 +2,53 @@ body {
     text-align: center;
 }
 
-canvas {
+#game-canvas {
     border: 2px solid black;
     background: black;
 }
 
+#side-canvas {
+    border: 2px solid black;
+    background: white;
+}
+
 #heading {
     font-family: Courier New, Courier, monospace;
+    display: inline-block;
+    float: none;
 }
+
+
+.centered {
+    float: none;
+    vertical-align: top;
+}
+
+
+#game-board {
+    width: auto;
+}
+
+#side-bar {
+    width: 160px;
+    height: 823px;
+}
+
+#game-wrapper {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+/* Buttons and controls*/
 
 #game-controls{
     margin-top: 10px;
-}
-
-.centered {
-    float:none;
-    vertical-align:top;
-    margin-right:-4px;
-}
-
-.control-button {
-    width : 150px;
-    height: 150px;
-    background-color: #59a659;
-    display: inline-block;
-    border: 1px solid black;
-    border-radius: 4px;
 }
 
 #pause-wrapper {
@@ -38,11 +59,12 @@ canvas {
 #pause {
     margin-top: 5px;
     height: 50px;
+    width: 400px;
     border: 1px solid black;
     border-radius: 4px;
     background-color: #D964C2;
     font-family: Courier New, Courier, monospace;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     line-height: 100%;
 }
@@ -53,5 +75,14 @@ canvas {
     -ms-user-select: none; 
     -o-user-select: none;
     user-select: none;
-    padding-top: 10px;
 }
+
+.control-button {
+    width : 80px;
+    height: 50px;
+    background-color: #59a659;
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+

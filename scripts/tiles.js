@@ -7,7 +7,7 @@ function Tiles(){
         for (var i = blocks_tall - 1; i >= 0; i--){
             if(this.row_is_complete(i)){
                 this.remove_row(i);
-                this.repaint(ctx,i);
+                this.repaint(side_ctx,i);
                 i++;
             } 
         }
@@ -41,7 +41,7 @@ function Tiles(){
         console.log(` ${this.tiles.length}   ;  ${this.tiles[0].length}`);
 
         this.tiles[i].forEach(function(block){
-            block.delete(ctx);
+            block.delete(side_ctx);
         })
 
         this.tiles.splice(i,1);

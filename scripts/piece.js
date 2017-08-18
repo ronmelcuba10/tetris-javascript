@@ -210,4 +210,11 @@ function Piece(x, y, color, border, bkcolor,logged){
         this.touched_down = true;
     }
 
+
+    this.teleport = function(x,y) {
+        this.blocks.forEach(function(block){
+            block.teleport(x,y);
+        })
+    }
+
 }
