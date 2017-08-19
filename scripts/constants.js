@@ -17,6 +17,7 @@ var middle = blocks_wide/2;
 // colors
 var bkColor = "black";
 var canvas_id = "game-canvas";
+var side_canvas_id = "side-canvas";
 var colors = ["red","blue","green","yellow","orange","pink","aqua","fuchsia","purple","chartreuse","lime"];
 
 // pieces 

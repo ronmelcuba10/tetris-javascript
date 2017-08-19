@@ -60,5 +60,9 @@ function Block(x,y,color,border, bkcolor){
         this.x = x * unit;
         this.y = y * unit;
     }
+
+    this.clone = function() {
+        return jQuery.extend(true, {}, this);
+    }
 }
 

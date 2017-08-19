@@ -15,35 +15,33 @@ var side_bar;
 
 // starts the game
 function run(){
-    tiles = new Tiles();
+    tiles = new Tiles(ctx);
     side_bar = new Sidebar();
+    piece = new Piece( middle, no_step, random_color(), bkColor, bkColor, logged); 
     next_piece = new Piece( middle, no_step, random_color(), bkColor, bkColor, logged); 
-    piece = new_piece();
-    piece.draw(ctx);
+    side_bar.show_next(next_piece);
 }
 
 // if there is an active piece passes its blocks to the tiles
 function tilerize() {
     if (!piece) return;
     tiles.tilerize(piece);
-    tiles.update(ctx);
+    tiles.update();
 }
 
 // before creating a new piece get all its blocks
 function new_piece() {
     tilerize();
-    var temp = next_piece;
+    piece = next_piece;
     next_piece = new Piece( middle, no_step, random_color(), bkColor, bkColor, logged); 
     side_bar.show_next(next_piece);
-    return temp;
 }
 
 // runs the game - this is the core
 // if could not move down create a new piece
 function play() {
-    tiles.print();
     if(!move_down())
-        piece = new_piece();
+        new_piece();
 }
 
 

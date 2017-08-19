@@ -1,13 +1,13 @@
-function Tiles(){
+function Tiles(ctx){
 
     this.tiles = get2DArray(blocks_tall, blocks_wide, initial_value); 
-    
+    this.ctx = ctx;
     
     this.update = function() {
         for (var i = blocks_tall - 1; i >= 0; i--){
             if(this.row_is_complete(i)){
                 this.remove_row(i);
-                this.repaint(side_ctx,i);
+                this.repaint(i);
                 i++;
             } 
         }
@@ -41,7 +41,7 @@ function Tiles(){
         console.log(` ${this.tiles.length}   ;  ${this.tiles[0].length}`);
 
         this.tiles[i].forEach(function(block){
-            block.delete(side_ctx);
+            block.delete(this.ctx);
         })
 
         this.tiles.splice(i,1);
@@ -49,17 +49,17 @@ function Tiles(){
     }
 
     // 
-    this.repaint = function(ctx,index){
+    this.repaint = function(index){
         console.log("repainting");
         for( var y = index; y >= 0; y--){
             for ( var x = 0; x < blocks_wide; x++){
                 if(this.tiles[y][x]){
                     console.log(` deleting on y=${y} x=${x}`);
-                    this.tiles[y][x].delete(ctx);
+                    this.tiles[y][x].delete(this.ctx);
                     console.log(` moving down `);
                     this.tiles[y][x].move(no_step,step);
                     console.log(` drawing  `);
-                    this.tiles[y][x].draw(ctx)
+                    this.tiles[y][x].draw(this.ctx)
                 }
             }
         }
@@ -70,7 +70,7 @@ function Tiles(){
         return ( y < 0 || this.tiles[y][x] == initial_value);
     }
 
-    // for debugging
+    // prints the tile tilerized --- for debugging 
     this.print = function (){
         try{
             for( var y = 0; y < blocks_tall; y++){

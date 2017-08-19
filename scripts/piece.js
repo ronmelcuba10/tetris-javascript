@@ -1,10 +1,10 @@
-function Piece(x, y, color, border, bkcolor,logged){
+function Piece(x, y, color, border, bkcolor, logged, pat){
     this.x = x;
     this.y = y;
     this.color = color;
     this.border = border;
     this.bkcolor = bkcolor;
-    this.pattern = random_pattern();
+    this.pattern = pat ? pat : random_pattern();
     this.height = this.pattern.length;
     this.width = this.pattern[0].length;
     this.logged = logged;
@@ -210,11 +210,22 @@ function Piece(x, y, color, border, bkcolor,logged){
         this.touched_down = true;
     }
 
+    // returns a clone of this piece in an specific location
+    this.clone = function(x,y){
+        var cloned_piece = new Piece( x, y, this.color, this.border, this.bkcolor, this.logged, this.pattern);
+        cloned_piece.pattern = this.pattern;
+        cloned_piece.build();
+        return cloned_piece;
+    }
 
-    this.teleport = function(x,y) {
-        this.blocks.forEach(function(block){
-            block.teleport(x,y);
-        })
+    this.print = function(){
+        console.log(` The piece is width ${this.width}   long ${this.height} `);
+        for (var j = 0; j < this.height; j++){
+            var str = "";
+            for (var i = 0; i < this.width; i++)
+                str += this.pattern[j][i];
+            console.log(str);
+        }
     }
 
 }
