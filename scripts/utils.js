@@ -117,6 +117,10 @@ function draw_jewel_block (ctx, x, y, wide, color){
     var y2 = y + 8*factor;
     var y3 = y + unit;
 
+    var color_shades = shades_of[color];
+
+    console.log("  esta es lod dfgslklsjks;ldkhjs;ljhksd;lgjhkgf      " + shades_of.length);
+
     var p1 = new Point (x0,y0);
     var p2 = new Point (x3,y0);
     var p3 = new Point (x3,y3);
@@ -126,18 +130,13 @@ function draw_jewel_block (ctx, x, y, wide, color){
     var p7 = new Point (x2,y2);
     var p8 = new Point (x1,y2);
 
-    /*
-    ctx.lineWidth = border_size;
-    ctx.strokeStyle = border;
-    ctx.fillStyle = color;
-    */
     var fill = true;
 
-    draw_polygon( ctx, p1, p2, p6, p5, "red" , fill);         // upper 
-    draw_polygon( ctx, p5, p6, p7, p8, "blue", fill );        // center
-    draw_polygon( ctx, p1, p5, p8, p4, "yellow", fill );      // left
-    draw_polygon( ctx, p2, p6, p7, p3, "green", fill );       // right
-    draw_polygon( ctx, p4, p8, p7, p3, "purple", fill );      // down
+    draw_polygon( ctx, p1, p2, p6, p5, color_shades[4], fill );     // upper 
+    draw_polygon( ctx, p5, p6, p7, p8, color_shades[3], fill );     // center
+    draw_polygon( ctx, p1, p5, p8, p4, color_shades[2], fill );     // left
+    draw_polygon( ctx, p2, p6, p7, p3, color_shades[1], fill );     // right
+    draw_polygon( ctx, p4, p8, p7, p3, color_shades[0], fill );     // down
 
     ctx.beginPath();
     ctx.lineWidth="2";
@@ -158,4 +157,6 @@ function draw_polygon(ctx, p1, p2, p3, p4, color, fill){
     ctx.closePath();
     ctx.fill();
 }
+
+
 
