@@ -14,6 +14,7 @@ function Block(x,y,color,border, bkcolor){
 
     // draw this block with the specified parementers
     this.draw_color = function(ctx, color, border){
+        /*
         var x0 = this.x;
         var x1 = this.x + 3*factor;
         var x2 = this.x + 7*factor;
@@ -39,6 +40,10 @@ function Block(x,y,color,border, bkcolor){
         ctx.closePath();
         ctx.stroke();
         ctx.fill();
+        */
+        //draw_rounded_block(ctx, this.x, this.y, color, border);
+        draw_jewel_block(ctx, this.x, this.y, 5, color);
+
     }
 
     // draws the block in background color -> removes it

@@ -26,6 +26,7 @@ function Sidebar(){
     this.level_x = unit;
     this.level_y = this.initial_Y + 2 * unit;
     this.level_font_size = 20;
+    this.level_font_color = "yellow";
 
     // 
     this.next_x_text = unit;
@@ -63,7 +64,7 @@ function Sidebar(){
         this.level_x,
         this.level_y,
         this.display_tiles_long,
-        this.display_tiles_height,
+        this.display_tiles_height + 1,
         level_color,
         level_color
     );
@@ -115,13 +116,17 @@ function Sidebar(){
         console.log(` x: ${side_bar_width/(unit * 2)}   y: ${2 * step}`);
     }
 
-    this.show_text = function(text, x, y, font_size, font) {
-        var gradient= this.side_ctx.createLinearGradient(0, 0, this.side_canvas.width, 0);
-        gradient.addColorStop("0","magenta");
-        gradient.addColorStop("0.5","blue");
-        gradient.addColorStop("1.0","red");
+    this.show_text = function(text, x, y, font_size, font, color, w_gradient) {
+        if(w_gradient){
+            var gradient= this.side_ctx.createLinearGradient(0, 0, this.side_canvas.width, 0);
+            gradient.addColorStop("0","magenta");
+            gradient.addColorStop("0.5","blue");
+            gradient.addColorStop("1.0","red");
+            this.side_ctx.fillStyle = gradient;
+        }
+        else this.side_ctx.fillStyle = color;
+
         this.side_ctx.font= font_size + "px " + font;
-        this.side_ctx.fillStyle = gradient;
         this.side_ctx.fillText(text, x, y);
     }
 
@@ -138,25 +143,33 @@ function Sidebar(){
     this.show_level = function(level) {
         this.draw_display(this.level_display);
         var middle = this.level_display.middle();
-        this.show_text("LEVEL",
-            this.level_display.x + unit,
-            middle.y - unit/2,
+
+        this.show_text("L E V E L",
+            middle.x,
+            middle.y - unit,
             this.level_font_size,
-            "Impact"
+            "Impact",
+            this.level_font_color,
+            !with_gradient
         );
+
         this.show_text(level,
-            this.level_display.x + unit/2,
-            middle + unit/2,
-            this.level_font_size + 8,
-            "Impact"
+            middle.x,
+            middle.y + 2 * unit,
+            this.level_font_size + 40,
+            "Impact",
+            this.level_font_color,
+            !with_gradient
         );
+        console.log(` level x${this.level_display.x + unit/2}   y${middle.y + unit/2}   level: ${level}`);
     }
 
 
-    this.draw_display(this.level_display);
-    this.show_text("Next Piece", this.next_x_text, this.next_y_text, this.next_font_size, "Verdana");
+    
+    this.show_level(" 1");
+    this.show_text("Next Piece", this.next_x_text, this.next_y_text, this.next_font_size, "Verdana", "black", with_gradient);
     this.draw_display(this.next_display);
-    this.show_text("YOUR SCORE", this.score_x_text, this.score_y_text, this.score_font_size, "Verdana");
+    this.show_text("YOUR SCORE", this.score_x_text, this.score_y_text, this.score_font_size, "Verdana", "black", with_gradient);
     this.draw_display(this.score_display);
 
 

@@ -44,7 +44,7 @@ var S = 83;
 var Space = 32;
 
 // misc
-var interval = 2048/2/2;
+var interval = 2048/2/2/2;
 var dimmensions = "2d";
 var initial_value = 0;
 var pause_btn_id = "#pause";
@@ -53,3 +53,4 @@ var left_btn_id = "#left";
 var right_btn_id = "#right";
 var down_btn_id = "#down";
 var rotation_cw_btn_id = "#rcw"
+var with_gradient = true;

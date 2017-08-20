@@ -228,4 +228,8 @@ function Piece(x, y, color, border, bkcolor, logged, pat){
         }
     }
 
+    this.isStarting = function() {
+        return this.blocks.some( b => b.y < 0 );
+    }
+
 }
