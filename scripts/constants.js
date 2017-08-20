@@ -19,6 +19,7 @@ var bkColor = "black";
 var canvas_id = "game-canvas";
 var side_canvas_id = "side-canvas";
 var colors = ["red","blue","green","yellow","orange","pink","aqua","fuchsia","purple","chartreuse","lime"];
+var level_color = "red";
 
 // pieces 
 var line = [[1,1,1,1]];

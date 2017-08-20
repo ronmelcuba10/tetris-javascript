@@ -20,6 +20,8 @@ function run(){
     piece = new Piece( middle, no_step, random_color(), bkColor, bkColor, logged); 
     next_piece = new Piece( middle, no_step, random_color(), bkColor, bkColor, logged); 
     side_bar.show_next(next_piece);
+    side_bar.show_score(tiles.score);
+    side_bar.show_level(tiles.level);
 }
 
 // if there is an active piece passes its blocks to the tiles
@@ -27,6 +29,8 @@ function tilerize() {
     if (!piece) return;
     tiles.tilerize(piece);
     tiles.update();
+    side_bar.show_score(tiles.score);
+    side_bar.show_level(tiles.level);
 }
 
 // before creating a new piece get all its blocks

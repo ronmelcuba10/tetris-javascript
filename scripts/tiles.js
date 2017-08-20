@@ -1,12 +1,15 @@
 function Tiles(ctx){
-
+    this.score = 0;
     this.tiles = get2DArray(blocks_tall, blocks_wide, initial_value); 
     this.ctx = ctx;
+    this.level = 1;
     
     this.update = function() {
         for (var i = blocks_tall - 1; i >= 0; i--){
             if(this.row_is_complete(i)){
                 this.remove_row(i);
+                this.score += blocks_wide;
+                this.level = Math.ceil(this.score / 100);
                 this.repaint(i);
                 i++;
             } 
