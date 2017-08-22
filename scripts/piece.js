@@ -1,4 +1,4 @@
-function Piece(x, y, color, border, bkcolor, logged, pat){
+function Piece(x, y, color, border, bkcolor, logged, pat) {
     this.x = x;
     this.y = y;
     this.color = color;
@@ -11,83 +11,88 @@ function Piece(x, y, color, border, bkcolor, logged, pat){
     this.touched_down = false;
     this.center_x = 0;
     this.center_y = 0;
-    
+    this.right_vector = new Point(1, 0);
+    this.left_vector = new Point(-1, 0);
+    this.down_vector = new Point(0, 1);
+    this.rotated_vector = new Point(0, 0);
+
+
 
     //log(` width: ${this.width} large: ${this.height}`, this.logged);
 
     // draws the piece with its color
-    this.draw = function (ctx){
-        this.generic_draw(ctx,false);
+    this.draw = function (ctx) {
+        this.generic_draw(ctx, false);
     }
 
     // draws th piece with the backgorund color -> deletes it
-    this.delete = function (ctx){
-        this.generic_draw(ctx,true);
+    this.delete = function (ctx) {
+        this.generic_draw(ctx, true);
     }
 
     // draws the piece using two option. With del = true means deletion
-    this.generic_draw = function (ctx, del){
+    this.generic_draw = function (ctx, del) {
         var index = 0;
-        this.blocks.forEach(function(block) {
+        this.blocks.forEach(function (block) {
             //log(`block: ${index} x: ${block.x} y: ${block.y} `, this.logged);
             index++;
-            if(del)block.delete(ctx);
+            if (del) block.delete(ctx);
             else block.draw(ctx);
         });
     }
 
     // moves the piece down
-    this.move_down = function(ctx){
+    this.move_down = function (ctx) {
         this.move(ctx, no_step, step);
     }
 
     // moves the piece left
-    this.move_left = function(ctx){
+    this.move_left = function (ctx) {
         this.move(ctx, -step, no_step);
     }
 
     //moves the piece right
-    this.move_right = function(ctx){
+    this.move_right = function (ctx) {
         this.move(ctx, step, no_step);
     }
 
     // moves the piece using specified vector
-    this.move = function (ctx,dx, dy){
+    this.move = function (ctx, dx, dy) {
         this.delete(ctx);
         this.x = this.x + dx;
         this.y = this.y + dy;
-        this.blocks.forEach(function(block) {
+        this.blocks.forEach(function (block) {
             block.move(dx, dy);
         });
         this.draw(ctx);
     }
 
     // returns the center coords of the actual piece pattern
-    this.set_pattern_center = function() {
-        this.center_x = Math.ceil(this.width/2), 
-        this.center_y = Math.floor(this.height/2)
+    this.set_pattern_center = function () {
+        this.center_x = Math.ceil(this.width / 2);
+        this.center_y = Math.floor(this.height / 2);
     }
 
     // returns the coords of the center block
     this.get_block_coord = function (i, j) {
-        return new Point( 
-            this.x + (i - this.center_x), 
+        return new Point(
+            this.x + (i - this.center_x),
             this.y + (j - this.center_y)
         );
     }
 
     // builds the piece based on the patterns's center coord and the pattern itself
-    this.build = function (){
+    this.build = function () {
         log(`x: ${this.x}  y: ${this.y} `);
         var blocks = [];
         this.set_pattern_center();
         var index = 0;
-        for (var j = 0; j < this.height; j++){
-            for (var i = 0; i < this.width; i++){
+        for (var j = 0; j < this.height; j++) {
+            for (var i = 0; i < this.width; i++) {
                 var point = this.get_block_coord(i, j);
                 //log(`index: ${index} x: ${this.x - point.x} y: ${this.y - point.y} i: ${i} j: ${j} block? : ${this.pattern[j][i]} `, this.logged);
                 if (this.pattern[j][i])
-                    blocks.push(new Block(point.x, point.y, this.color, this.border,this.bkcolor));
+                    blocks.push(new Block(point.x, point.y, this.color, this.border, this.bkcolor));
                 index++;
             }
         }
@@ -96,10 +101,10 @@ function Piece(x, y, color, border, bkcolor, logged, pat){
 
     // assignig this member
     this.blocks = this.build();
-    
+
 
     // rotate clock wise the pattern
-    this.rotateCW = function(ctx){
+    this.rotateCW = function (ctx) {
         this.delete(ctx);
         this.pattern = rotate_matrix90CW(this.pattern);
         log(`width ${this.width}  height${this.height}`, this.logged);
@@ -113,92 +118,59 @@ function Piece(x, y, color, border, bkcolor, logged, pat){
 
 
     // returns the list of blocks with their coords IN THE tiles
-    this.coords_blocks = function() {
+    this.coords_blocks = function () {
         var crd_blcks = [];
-        this.blocks.forEach(function(block){
+        this.blocks.forEach(function (block) {
             crd_blcks.push(block.tile());
         });
         return crd_blcks;
     }
 
-    // returns the contested tiles for the right movement
-    this.right_face = function(){
+    this.future_blocks = function (vector) {
         var face = [];
         this.set_pattern_center(this.width, this.height);
-        for (var j = 0; j < this.height; j++){
-            var first = 0;
-            for (var i = 0 ; i < this.width; i++){
-                if (this.pattern[j][i]) { 
-                    last = i;
+        for (var j = 0; j < this.height; j++) {
+            for (var i = 0; i < this.width; i++) {
+                if (this.pattern[j][i]) {
+                    var tile_x_coord = (this.x - (this.center_x - i)) + vector.x;
+                    var tile_y_coord = (this.y + (j - this.center_y)) + vector.y;
+                    face.push(new Point(tile_x_coord, tile_y_coord));
                 }
             }
-            var tile_x_coord = (this.x + (last - this.center_x )) + 1;
-            var tile_y_coord = (this.y + (j - this.center_y));
-            //log(`these are the right face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
-            face.push(new Point(tile_x_coord, tile_y_coord)); // I will use just the coordinates 
         }
         return face;
-        //console.log("out of right");
+    }
+
+    // returns the contested tiles for the right movement
+    this.right_face = function () {
+        return this.future_blocks(this.right_vector);
     }
 
     // returns the contested tiles for the left movement
-    this.left_face = function(){
-        var face = [];
-        this.set_pattern_center(this.width, this.height);
-        for (var j = 0; j < this.height; j++){
-            var first = 0;
-            for (var i = 0; i < this.width; i++){
-                if (this.pattern[j][i]) { 
-                    first = i;
-                    break;
-                }
-            }
-            var tile_x_coord = (this.x - (this.center_x - first)) - 1;
-            var tile_y_coord = (this.y + (j - this.center_y));
-            //log(`these are the left face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
-            face.push(new Point(tile_x_coord, tile_y_coord));
-        }
-        //console.log("out of left");
-        return face;
+    this.left_face = function () {
+        return this.future_blocks(this.left_vector);
     }
 
     // returns the contested tiles for moving down
-    this.lower_face = function() {
-        var face = [];
-        this.set_pattern_center(this.width, this.height);
-        //log("here in lower face",this.logged);
-        for (var i = 0; i < this.width; i++){
-            var first = 0;
-            for (var j = this.height-1; j >=0; j--){
-                if (this.pattern[j][i]) { 
-                    first = i;
-                    break;
-                }
-            }
-            var tile_x_coord = (this.x - (this.center_x - first));
-            var tile_y_coord = (this.y + (j - this.center_y)) + 1;
-            //log(`these are the lower face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
-            face.push(new Point(tile_x_coord, tile_y_coord));
-        }
-        //console.log("out of lower");
-        return face; 
+    this.lower_face = function () {
+        return this.future_blocks(this.down_vector);
     }
 
     //returns the contested tiles once rotated
-    this.rotated_face = function() {
+    this.rotated_face = function () {
         var face = [];
         var fpattern = rotate_matrix90CW(this.pattern);
-        var pheight = this.width; 
+        var pheight = this.width;
         var pwidth = this.height;
-        for (var j = 0; j < pheight; j++){
+        for (var j = 0; j < pheight; j++) {
             var first = 0;
-            for (var i = 0; i < pwidth; i++){
-                if (fpattern[j][i]){
+            for (var i = 0; i < pwidth; i++) {
+                if (fpattern[j][i]) {
                     var tile_x_coord = (this.x - (this.center_x - first));
                     var tile_y_coord = (this.y + (j - this.center_y));
-                    log(`these are the rotated face coords x:${tile_x_coord} y:${tile_y_coord}`,this.logged);
+                    log(`these are the rotated face coords x:${tile_x_coord} y:${tile_y_coord}`, this.logged);
                     face.push(new Point(tile_x_coord, tile_y_coord));
-                } 
+                }
             }
         }
         console.log("out of rotate");
@@ -206,21 +178,21 @@ function Piece(x, y, color, border, bkcolor, logged, pat){
     }
 
     // tags the piece as not more move allowed
-    this.touch_down = function() {
+    this.touch_down = function () {
         this.touched_down = true;
     }
 
     // returns a clone of this piece in an specific location
-    this.clone = function(x,y){
-        var cloned_piece = new Piece( x, y, this.color, this.border, this.bkcolor, this.logged, this.pattern);
+    this.clone = function (x, y) {
+        var cloned_piece = new Piece(x, y, this.color, this.border, this.bkcolor, this.logged, this.pattern);
         cloned_piece.pattern = this.pattern;
         cloned_piece.build();
         return cloned_piece;
     }
 
-    this.print = function(){
+    this.print = function () {
         console.log(` The piece is width ${this.width}   long ${this.height} `);
-        for (var j = 0; j < this.height; j++){
+        for (var j = 0; j < this.height; j++) {
             var str = "";
             for (var i = 0; i < this.width; i++)
                 str += this.pattern[j][i];
@@ -228,8 +200,8 @@ function Piece(x, y, color, border, bkcolor, logged, pat){
         }
     }
 
-    this.isStarting = function() {
-        return this.blocks.some( b => b.y < 0 );
+    this.isStarting = function () {
+        return this.blocks.some(b => b.y < 0);
     }
 
 }

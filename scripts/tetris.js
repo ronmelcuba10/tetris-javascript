@@ -32,6 +32,9 @@ function tilerize() {
         toggle_movement();
         game_over = true;
         piece = null;
+        next_piece = null;
+        alert("Game over");
+        reset()
         return;
     }
 
@@ -49,12 +52,18 @@ function new_piece() {
     side_bar.show_next(next_piece);
 }
 
+function reset() {
+    
+}
+
+
 // runs the game - this is the core
 // if could not move down create a new piece
 function play() {
     if(!move_down())
         new_piece();
 }
+
 
 
 /**
@@ -100,7 +109,7 @@ function collision_rotation(){
 
 // moves the piece based on the key pressed, if pused do nothing
 function move(key){
-    if(isPaused) return;
+    if( isPaused) return;
 
     switch (key) {
         case LEFT:  
@@ -163,24 +172,26 @@ $(pause_btn_id).click(function(){
 });
 
 $(left_btn_id).click(function(){
-    move_left();
+    if(!game_over) move_left();
 });
 
 
 $(right_btn_id).click(function(){
-    move_right();
+    if(!game_over)move_right();
 });
 
 
 $(down_btn_id).click(function(){
-    move_down();
+    if(!game_over)move_down();
 });
 
 $(rotation_cw_btn_id).click(function(){
-    rotate();
+    if(!game_over)rotate();
 });
 
 $(rotation_ccw_btn_id).click(function(){
+    if(game_over) return;
+
     rotate();
     rotate();
     rotate();
@@ -189,11 +200,14 @@ $(rotation_ccw_btn_id).click(function(){
 
 // handling key events
 $(document).keydown(function (event) {
+    if(game_over) return;
+
     var key = event.which;
     if(key == Space){
         toggle_movement();
         return;            
     }
+
     if(key == A ) key = LEFT;
     if(key == S ) key = DOWN;
     if(key == W ) key = UP;
@@ -210,6 +224,9 @@ $(document).keydown(function (event) {
 /**
  * THE GAME 
  */
+
 run();
 if(!game_over) cycle = setInterval(play, interval);
+
+
 

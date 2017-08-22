@@ -63,7 +63,6 @@ function Point(x,y){
     }
 }
 
-
 function draw_rounded_block(ctx, x, y, color, border){
 
     if(color == "black"){
@@ -100,7 +99,7 @@ function draw_rounded_block(ctx, x, y, color, border){
 }
 
 
-function draw_jewel_block (ctx, x, y, wide, color){
+function draw_jewel_block (ctx, x, y,color){
 
     if(color == "black"){
         ctx.fillStyle = "black";
@@ -118,8 +117,6 @@ function draw_jewel_block (ctx, x, y, wide, color){
     var y3 = y + unit;
 
     var color_shades = shades_of[color];
-
-    console.log("  esta es lod dfgslklsjks;ldkhjs;ljhksd;lgjhkgf      " + shades_of.length);
 
     var p1 = new Point (x0,y0);
     var p2 = new Point (x3,y0);

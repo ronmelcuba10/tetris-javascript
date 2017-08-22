@@ -10,6 +10,7 @@ function Tiles(ctx){
                 this.remove_row(i);
                 this.score += blocks_wide;
                 this.level = Math.ceil(this.score / 100);
+                interval /= 2;
                 this.repaint(i);
                 i++;
             } 

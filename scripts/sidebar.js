@@ -1,4 +1,4 @@
-function Display(x, y, wide, height, color, border){
+function Display(x, y, wide, height, color, border) {
     this.x = x;
     this.y = y;
     this.wide = wide;
@@ -6,19 +6,19 @@ function Display(x, y, wide, height, color, border){
     this.color = color;
     this.border = border;
 
-    this.middle_tile = function(){
-        return new Point(this.x/unit + this.wide/2, this.y/unit + this.height/2);
+    this.middle_tile = function () {
+        return new Point(this.x / unit + this.wide / 2, this.y / unit + this.height / 2);
     }
 
-    this.middle = function() {
+    this.middle = function () {
         var p = this.middle_tile();
-        return new Point( p.x * unit, p.y * unit );
+        return new Point(p.x * unit, p.y * unit);
     }
 }
 
-function Sidebar(){
+function Sidebar() {
     this.side_canvas = document.getElementById(side_canvas_id);
-    this.side_ctx = this.side_canvas.getContext(dimmensions); 
+    this.side_ctx = this.side_canvas.getContext(dimmensions);
     this.display_tiles_long = 6;
     this.display_tiles_height = 4;
     this.initial_Y = 0;
@@ -41,11 +41,11 @@ function Sidebar(){
     this.score_x = this.score_x_text;
     this.score_y = this.score_y_text + unit / 2;
     this.score_color = "white";
-    
+
     this.next_display = new Display(
-        this.next_x, 
-        this.next_y, 
-        this.display_tiles_long, 
+        this.next_x,
+        this.next_y,
+        this.display_tiles_long,
         this.display_tiles_height,
         bkColor,
         bkColor
@@ -71,7 +71,7 @@ function Sidebar(){
 
 
 
-    this.draw_display = function(display) {
+    this.draw_display = function (display) {
         var x = display.x;
         var y = display.y;
         var wide = display.wide;
@@ -90,8 +90,8 @@ function Sidebar(){
         this.side_ctx.fillStyle = display.color;
 
         this.side_ctx.beginPath();
-        this.side_ctx.moveTo(x1,y0);
-        this.side_ctx.lineTo(x2,y0);
+        this.side_ctx.moveTo(x1, y0);
+        this.side_ctx.lineTo(x2, y0);
         this.side_ctx.quadraticCurveTo(x3, y0, x3, y1);
         this.side_ctx.lineTo(x3, y2);
         this.side_ctx.quadraticCurveTo(x3, y3, x2, y3);
@@ -105,42 +105,49 @@ function Sidebar(){
     }
 
 
-    this.show_next = function(pc) {
+    this.show_next = function (pc) {
         this.draw_display(this.next_display);
         var middle = this.next_display.middle_tile();
-        var p = pc.clone( middle.x , middle.y);
+        var p = pc.clone(middle.x, middle.y);
         console.log('next piece');
         p.print();
         console.log(` piece.x: ${p.x}   piece.y: ${p.y}  color ${p.color}  bk ${p.bkcolor}    `);
         p.draw(this.side_ctx);
-        console.log(` x: ${side_bar_width/(unit * 2)}   y: ${2 * step}`);
+        console.log(` x: ${side_bar_width / (unit * 2)}   y: ${2 * step}`);
     }
 
-    this.show_text = function(text, x, y, font_size, font, color, w_gradient) {
-        if(w_gradient){
-            var gradient= this.side_ctx.createLinearGradient(0, 0, this.side_canvas.width, 0);
-            gradient.addColorStop("0","magenta");
-            gradient.addColorStop("0.5","blue");
-            gradient.addColorStop("1.0","red");
+    this.show_text = function (text, x, y, font_size, font, color, w_gradient, outline = false) {
+        if (w_gradient) {
+            var gradient = this.side_ctx.createLinearGradient(0, 0, this.side_canvas.width, 0);
+            gradient.addColorStop("0", "magenta");
+            gradient.addColorStop("0.5", "blue");
+            gradient.addColorStop("1.0", "red");
             this.side_ctx.fillStyle = gradient;
         }
         else this.side_ctx.fillStyle = color;
 
-        this.side_ctx.font= font_size + "px " + font;
+        this.side_ctx.font = font_size + "px " + font;
+
+        if (outline) {
+            this.side_ctx.strokeStyle = "#085921";
+            this.side_ctx.lineWidth = 6;
+            this.side_ctx.strokeText(text, x, y)
+        }
+        
         this.side_ctx.fillText(text, x, y);
     }
 
-    this.show_score = function(score){
+    this.show_score = function (score) {
         this.draw_display(this.score_display);
         this.side_ctx.font = "50px Verdana";
         this.side_ctx.fillStyle = this.score_color;
         this.side_ctx.textAlign = "center";
         var middle = this.score_display.middle();
         console.log(` score ${score}  x: ${middle.x}   y:${middle.y} `);
-        this.side_ctx.fillText(score, middle.x, middle.y + unit); 
+        this.side_ctx.fillText(score, middle.x, middle.y + unit);
     }
 
-    this.show_level = function(level) {
+    this.show_level = function (level) {
         this.draw_display(this.level_display);
         var middle = this.level_display.middle();
 
@@ -159,13 +166,14 @@ function Sidebar(){
             this.level_font_size + 40,
             "Impact",
             this.level_font_color,
-            !with_gradient
+            !with_gradient,
+            true
         );
-        console.log(` level x${this.level_display.x + unit/2}   y${middle.y + unit/2}   level: ${level}`);
+        console.log(` level x${this.level_display.x + unit / 2}   y${middle.y + unit / 2}   level: ${level}`);
     }
 
 
-    
+
     this.show_level(" 1");
     this.show_text("Next Piece", this.next_x_text, this.next_y_text, this.next_font_size, "Verdana", "black", with_gradient);
     this.draw_display(this.next_display);
