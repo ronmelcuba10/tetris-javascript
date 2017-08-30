@@ -49,7 +49,7 @@ var weird = [[1, 0, 0, 1], [1, 1, 1, 1]];
 var chess = [[1, 0, 1, 0], [0, 1, 0, 1]];
 var twin = [[1, 0, 0, 0], [0, 0, 0, 1]];
 
-var patterns = [twin, weird, chess];// [line, square, l_corner, r_corner, base, r_slide, l_slide];
+var patterns = [line, square, l_corner, r_corner, base, r_slide, l_slide];// [twin, weird, chess]; // for weird pieces
 
 // keys
 var LEFT = 37;
